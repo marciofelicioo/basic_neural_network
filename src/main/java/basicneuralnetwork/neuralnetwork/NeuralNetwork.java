@@ -1,11 +1,15 @@
-package basicneuralnetwork;
+package basicneuralnetwork.neuralnetwork;
 
+import basicneuralnetwork.Exceptions.WrongDimensionException;
 import basicneuralnetwork.activationfunctions.*;
 import basicneuralnetwork.utilities.FileReaderAndWriter;
 import basicneuralnetwork.utilities.MatrixUtilities;
 import org.ejml.simple.SimpleMatrix;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -211,6 +215,63 @@ public class NeuralNetwork {
         applyMutation(weights, probability);
         applyMutation(biases, probability);
     }
+    public void saveWeights(String filename) throws IOException {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            // Salvar pesos
+            for (SimpleMatrix weightMatrix : this.weights) {
+                double[] data = weightMatrix.getDDRM().getData();
+                writer.println(Arrays.toString(data));
+            }
+            // Salvar biases
+            for (SimpleMatrix biasMatrix : this.biases) {
+                double[] data = biasMatrix.getDDRM().getData();
+                writer.println(Arrays.toString(data));
+            }
+        }
+    }
+
+    public void loadWeights(String filename) throws IOException {
+        List<double[]> weightData = new ArrayList<>();
+        List<double[]> biasData = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            int totalMatrices = this.weights.length + this.biases.length;
+            int count = 0;
+            while ((line = reader.readLine()) != null && count < totalMatrices) {
+                // Remover colchetes e espaços
+                line = line.replace("[", "").replace("]", "").trim();
+                String[] tokens = line.split(",");
+                double[] data = new double[tokens.length];
+                for (int i = 0; i < tokens.length; i++) {
+                    data[i] = Double.parseDouble(tokens[i].trim());
+                }
+                if (count < this.weights.length) {
+                    weightData.add(data);
+                } else {
+                    biasData.add(data);
+                }
+                count++;
+            }
+        }
+
+        // Reconstruir as matrizes de pesos
+        for (int i = 0; i < this.weights.length; i++) {
+            double[] data = weightData.get(i);
+            int numRows = this.weights[i].numRows();
+            int numCols = this.weights[i].numCols();
+            this.weights[i] = new SimpleMatrix(numRows, numCols, true, data);
+        }
+
+        // Reconstruir as matrizes de biases
+        for (int i = 0; i < this.biases.length; i++) {
+            double[] data = biasData.get(i);
+            int numRows = this.biases[i].numRows();
+            int numCols = this.biases[i].numCols();
+            this.biases[i] = new SimpleMatrix(numRows, numCols, true, data);
+        }
+    }
+
 
     // Adds a randomly generated gaussian number to each element of a Matrix in an array of matrices
     // Probability: determines how many values will be modified

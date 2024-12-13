@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"UnitTests","l":"DataPreprocessorTests"},{"p":"UnitTests","l":"DigitClassifierTests"},{"p":"UnitTests","l":"DigitTrainerTests"},{"p":"UnitTests","l":"NeuralNetworkTests"}];updateSearchResults();

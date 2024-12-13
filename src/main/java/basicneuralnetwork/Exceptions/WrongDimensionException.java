@@ -1,4 +1,4 @@
-package basicneuralnetwork;
+package basicneuralnetwork.Exceptions;
 
 import java.util.Arrays;
 

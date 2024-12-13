@@ -1,6 +1,6 @@
 package basicneuralnetwork.utilities;
 
-import basicneuralnetwork.NeuralNetwork;
+import basicneuralnetwork.neuralnetwork.NeuralNetwork;
 import basicneuralnetwork.activationfunctions.ActivationFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

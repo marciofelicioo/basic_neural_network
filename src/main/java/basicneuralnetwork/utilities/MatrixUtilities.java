@@ -1,6 +1,6 @@
 package basicneuralnetwork.utilities;
 
-import basicneuralnetwork.WrongDimensionException;
+import basicneuralnetwork.Exceptions.WrongDimensionException;
 import org.ejml.simple.SimpleMatrix;
 
 import java.util.Random;
