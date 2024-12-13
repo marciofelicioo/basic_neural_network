@@ -38,4 +38,4 @@ The project is an adaptation and extension of the basic neural network library p
 
 ### Installing
 Clone the repository:
-git clone git@github.com:marciofelicioo/basic_neural_network
+git clone https://github.com/marciofelicioo/basic_neural_network.git
